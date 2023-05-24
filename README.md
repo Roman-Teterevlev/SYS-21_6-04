@@ -60,7 +60,83 @@ Docker Compose — это инструмент для описания мног�
 - скриншот команды docker ps;
 - скриншот авторизации в админке Zabbix.
 ### Ответ:
+```
+version: "3"
+services:
+  PostgreSQL:
+    image: postgres:latest
+    container_name: teterevlevrv-netology-db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_PASSWORD: teterevlevrv12!3!!
+      POSTGRES_DB: teterevlevrv-db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      teterevlevrv-my-netology-hw:
+        ipv4_address: 172.22.0.2
+    restart: always
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: teterevlevrv-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: teterevlevrv@ilove-netology.com
+      PGADMIN_DEFAULT_PASSWORD: teterevlevrv12!3!!
+    ports:
+      - 61231:80
+    networks:
+      teterevlevrv-my-netology-hw:
+        ipv4_address: 172.22.0.3
+    restart: always
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql
+    links:
+      - PostgreSQL
+      - pgadmin
+    container_name: teterevlevrv-zabbix-netology
+    environment:
+      DB_SERVER_HOST: 172.22.0.2
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: teterevlevrv12!3!!
+    ports:
+      - 10051:10051
+    networks:
+      teterevlevrv-my-netology-hw:
+        ipv4_address: 172.22.0.4
+    restart: always
+
+  zabbix_wgui:
+    image: zabbix/zabbix-web-apache-pgsql
+    links:
+      - PostgreSQL
+      - pgadmin
+      - zabbix-server
+    container_name: teterevlevrv-netology-zabbix-frontend
+    environment:
+      DB_SERVER_HOST: 172.22.0.2
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: teterevlevrv12!3!!
+      ZBX_SERVER_HOST: zabbix_wgui
+      PHP_TZ: "Europe/Moscow"
+    ports:
+      - 80:8080
+      - 443:8443
+    networks:
+      teterevlevrv-my-netology-hw:
+        ipv4_address: 172.22.0.5
+    restart: always
+
+networks:
+  teterevlevrv-my-netology-hw:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.22.0.0/24
+```
 ## Задание 8
 Выполните действия:
 1. Убейте все контейнеры и потом удалите их.
