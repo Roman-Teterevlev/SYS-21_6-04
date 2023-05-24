@@ -137,6 +137,8 @@ networks:
       config:
       - subnet: 172.22.0.0/24
 ```
+![Screenshot at 2023-05-25 01-17-22](https://github.com/Roman-Teterevlev/SYS-21_6-04/assets/132853752/11f053ac-7783-4ac2-a2cb-75683968021d)
+![Screenshot at 2023-05-25 01-19-26](https://github.com/Roman-Teterevlev/SYS-21_6-04/assets/132853752/e6d06c6c-66d6-4784-81fa-d43a4c0c170d)
 ## Задание 8
 Выполните действия:
 1. Убейте все контейнеры и потом удалите их.
